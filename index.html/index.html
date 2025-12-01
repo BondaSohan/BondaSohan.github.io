@@ -1,0 +1,792 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>B sohan | Game Developer Portfolio</title>
+
+    <style>
+        :root {
+            --bg: #050816;
+            --bg-soft: #0b1020;
+            --accent: #3b82f6;
+            --accent-soft: #1d4ed8;
+            --text: #f9fafb;
+            --text-soft: #9ca3af;
+            --card: #0f172a;
+            --border-soft: #1f2937;
+            --radius-xl: 16px;
+            --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+            sans-serif;
+            background: radial-gradient(circle at top, #111827 0, #020617 55%);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; display: block; }
+
+        .page { min-height: 100vh; display: flex; flex-direction: column; }
+        .container {
+            width: min(1080px, 100%);
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(20px);
+            background: linear-gradient(
+                to bottom,
+                rgba(15, 23, 42, 0.9),
+                rgba(15, 23, 42, 0.75),
+                transparent
+            );
+            border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+        }
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+        }
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-soft);
+        }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 18px; font-size: 0.95rem; }
+        .nav-links a {
+            padding: 6px 10px;
+            border-radius: 999px;
+            transition: background 0.18s ease, color 0.18s ease;
+            color: var(--text-soft);
+        }
+        .nav-links a:hover {
+            background: rgba(37, 99, 235, 0.16);
+            color: var(--text);
+        }
+
+        .hero { padding: 60px 0 40px; }
+        .hero-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+            gap: 32px;
+            align-items: center;
+        }
+        @media (max-width: 800px) {
+            .hero-inner { grid-template-columns: 1fr; padding-top: 24px; }
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            font-size: 0.75rem;
+            color: var(--text-soft);
+            margin-bottom: 16px;
+        }
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
+        }
+        .hero-title {
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            margin-bottom: 10px;
+        }
+        .hero-title span {
+            background: linear-gradient(to right, #3b82f6, #22c55e);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-soft);
+            max-width: 460px;
+            margin-bottom: 22px;
+        }
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .btn-primary,
+        .btn-ghost {
+            border-radius: 999px;
+            padding: 10px 18px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.14s ease, box-shadow 0.14s ease,
+            background 0.14s ease, border-color 0.14s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+            color: #f9fafb;
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.45);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 40px rgba(37, 99, 235, 0.6);
+        }
+        .btn-ghost {
+            background: rgba(15, 23, 42, 0.85);
+            border-color: rgba(148, 163, 184, 0.4);
+            color: var(--text-soft);
+        }
+        .btn-ghost:hover {
+            background: rgba(15, 23, 42, 1);
+            border-color: rgba(148, 163, 184, 0.9);
+            color: var(--text);
+        }
+        .hero-mini { font-size: 0.8rem; color: var(--text-soft); }
+
+        .hero-highlight {
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            background: radial-gradient(circle at top left, #1d283a, #020617);
+            padding: 18px 18px 16px;
+            box-shadow: var(--shadow-soft);
+        }
+        .hero-highlight h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-soft);
+            margin-bottom: 12px;
+        }
+        .hero-highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            font-size: 0.8rem;
+            color: var(--text-soft);
+        }
+        .hero-highlight-item strong {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--text);
+        }
+
+        section { padding: 30px 0; }
+        .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-soft);
+            margin-bottom: 18px;
+        }
+        .section-card {
+            border-radius: var(--radius-xl);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--border-soft);
+            padding: 18px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .about-text { font-size: 0.95rem; color: var(--text-soft); }
+        .about-text p + p { margin-top: 10px; }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .skill-pill {
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            background: rgba(15, 23, 42, 0.95);
+        }
+
+        .featured-card {
+            border-radius: 20px;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            background: radial-gradient(circle at top left, #172554, #020617);
+            padding: 18px;
+            box-shadow: var(--shadow-soft);
+            margin-bottom: 18px;
+        }
+        .featured-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #93c5fd;
+            margin-bottom: 6px;
+        }
+        .featured-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .featured-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.4fr);
+            gap: 16px;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .featured-grid { grid-template-columns: 1fr; }
+        }
+        .featured-media {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(37, 99, 235, 0.4);
+            background: radial-gradient(circle at top, #1d283a, #020617);
+            padding: 10px;
+        }
+        .featured-media-inner {
+            position: relative;
+            padding-top: 56.25%;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+        .featured-media-inner img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .featured-tag {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.85);
+            font-size: 0.7rem;
+            color: var(--text-soft);
+        }
+        .featured-body-text {
+            font-size: 0.92rem;
+            color: var(--text-soft);
+            margin-bottom: 10px;
+        }
+        .featured-meta {
+            font-size: 0.8rem;
+            color: #93c5fd;
+            margin-bottom: 12px;
+        }
+        .featured-list {
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            margin-bottom: 12px;
+            padding-left: 18px;
+        }
+        .featured-list li + li { margin-top: 4px; }
+        .featured-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .btn-featured {
+            border-radius: 999px;
+            padding: 9px 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.14s ease, box-shadow 0.14s ease,
+            background 0.14s ease, border-color 0.14s ease;
+        }
+        .btn-featured.primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+            color: #f9fafb;
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.45);
+        }
+        .btn-featured.outline {
+            background: rgba(15, 23, 42, 0.9);
+            color: var(--text-soft);
+            border-color: rgba(148, 163, 184, 0.6);
+        }
+        .btn-featured:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.65);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 16px;
+        }
+        .game-card {
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid var(--border-soft);
+            background: radial-gradient(circle at top, #111827, #020617);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-soft);
+        }
+        .game-thumb {
+            position: relative;
+            padding-top: 56.5%;
+            overflow: hidden;
+        }
+        .game-thumb img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .game-tag {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(15, 23, 42, 0.85);
+            font-size: 0.7rem;
+            color: var(--text-soft);
+        }
+        .game-body {
+            padding: 12px 14px 14px;
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .game-title { font-size: 0.98rem; font-weight: 600; }
+        .game-desc { font-size: 0.85rem; color: var(--text-soft); flex: 1; }
+        .game-meta { font-size: 0.78rem; color: var(--text-soft); opacity: 0.9; }
+        .game-actions {
+            margin-top: 8px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .btn-game {
+            flex: 1;
+            text-align: center;
+            padding: 7px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            background: rgba(15, 23, 42, 0.95);
+            cursor: pointer;
+            transition: background 0.14s ease, transform 0.14s ease,
+            border-color 0.14s ease;
+        }
+        .btn-game.primary {
+            border-color: transparent;
+            background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+        }
+        .btn-game:hover {
+            transform: translateY(-1px);
+            border-color: rgba(148, 163, 184, 0.9);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+            gap: 18px;
+        }
+        @media (max-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+        .contact-item { font-size: 0.9rem; color: var(--text-soft); }
+        .contact-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .contact-pill {
+            font-size: 0.82rem;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            background: rgba(15, 23, 42, 0.95);
+            color: var(--text-soft);
+        }
+
+        footer {
+            padding: 16px 0 24px;
+            font-size: 0.78rem;
+            color: #6b7280;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <header class="nav">
+        <div class="container nav-inner">
+            <div class="nav-logo">
+                <span>B</span> sohan • Game Dev
+            </div>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#featured">Featured</a>
+                <a href="#games">Games</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero" id="top">
+            <div class="hero-inner">
+                <div>
+                    <div class="badge">
+                        <span class="badge-dot"></span>
+                        Open to work • Game Developer
+                    </div>
+
+                    <h1 class="hero-title">
+                        Hi, I'm <span>Sohan B</span><br />
+                        Game Developer
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        I build mobile games using Unity — from idea and prototype
+                        to release-ready builds. I love working on puzzle games,
+                        satisfying interactions, and clean, polished game feel.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#featured" class="btn-primary">Play My Games</a>
+                        <a href="#contact" class="btn-ghost">Contact Me</a>
+                    </div>
+
+                    <p class="hero-mini">
+                        Currently looking for opportunities as a
+                        <strong>Game Developer</strong>.
+                    </p>
+                </div>
+
+                <div class="hero-highlight">
+                    <h3>Quick Snapshot</h3>
+                    <div class="hero-highlight-grid">
+                        <div class="hero-highlight-item">
+                            <strong>Role</strong>
+                            Game Developer (Unity)
+                        </div>
+                        <div class="hero-highlight-item">
+                            <strong>Focus</strong>
+                            Mobile games, puzzle & casual
+                        </div>
+                        <div class="hero-highlight-item">
+                            <strong>Tech</strong>
+                            Unity, C#, Git
+                        </div>
+                        <div class="hero-highlight-item">
+                            <strong>Based in</strong>
+                            India • Remote friendly
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">
+                A quick introduction about who I am and what I build.
+            </p>
+            <div class="section-card">
+                <div class="about-text">
+                    <p>
+                        I'm <strong>Sohan B</strong>, a Game Developer who enjoys
+                        creating fun, simple and satisfying mobile games.
+                    </p>
+                    <p>
+                        I work mainly with <strong>Unity and C#</strong>, focusing
+                        on gameplay programming, UI, level design, and making sure
+                        the controls feel smooth and responsive.
+                    </p>
+                    <p>
+                        My goal is to keep improving as a developer, publish more
+                        games, and collaborate with teams or clients who want to
+                        create engaging puzzle and casual games.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 class="section-title">Skills</h2>
+            <p class="section-subtitle">
+                Technologies and tools I use regularly.
+            </p>
+            <div class="section-card">
+                <div class="skills-list">
+                    <span class="skill-pill">Unity</span>
+                    <span class="skill-pill">C# Programming</span>
+                    <span class="skill-pill">Mobile Game Development</span>
+                    <span class="skill-pill">Puzzle &amp; Casual Games</span>
+                    <span class="skill-pill">UI / UX in Unity</span>
+                    <span class="skill-pill">Level Design</span>
+                    <span class="skill-pill">Game Feel &amp; Polish</span>
+                    <span class="skill-pill">Version Control (Git)</span>
+                    <span class="skill-pill">Google Play Release</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Featured Games ===== -->
+        <section id="featured">
+            <h2 class="section-title">Featured Games</h2>
+            <p class="section-subtitle">
+                Highlighted projects that show the kind of mobile games I like to build.
+            </p>
+
+            <!-- Block Moves -->
+            <div class="featured-card">
+                <div class="featured-label">Featured • Mobile Puzzle Game</div>
+                <div class="featured-title">Block Moves Color Jam</div>
+
+                <div class="featured-grid">
+                    <div class="featured-media">
+                        <div class="featured-media-inner">
+                            <img
+                                src="images/block-moves-color-jam.png"
+                                alt="Block Moves Color Jam Screenshot"
+                            />
+                            <span class="featured-tag">Available on Google Play</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="featured-body-text">
+                            <strong>Block Moves Color Jam</strong> is a relaxing and satisfying
+                            color puzzle game. Slide and move colorful blocks around the board,
+                            line them up in the right order, and clear the stage with the least
+                            number of moves.
+                        </p>
+                        <p class="featured-meta">
+                            Built with Unity • Android • Single-player • Casual / Puzzle
+                        </p>
+                        <ul class="featured-list">
+                            <li>Simple swipe controls that feel smooth and responsive.</li>
+                            <li>Color-based levels that get more challenging step by step.</li>
+                            <li>Perfect for short play sessions and relaxing brain workouts.</li>
+                        </ul>
+
+                        <div class="featured-actions">
+                            <a
+                                class="btn-featured primary"
+                                href="https://play.google.com/store/apps/details?id=com.block.moves.color.jam&hl=en"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                View on Google Play
+                            </a>
+                            <a class="btn-featured outline" href="#games">
+                                See All My Games
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color Stack Master -->
+            <div class="featured-card">
+                <div class="featured-label">Featured • Mobile Stack / Puzzle Game</div>
+                <div class="featured-title">Color Stack Master</div>
+
+                <div class="featured-grid">
+                    <div class="featured-media">
+                        <div class="featured-media-inner">
+                            <!-- IMPORTANT: this expects images/color-stack-master.png -->
+                            <img
+                                src="images/color-stack-master.png"
+                                alt="Color Stack Master Screenshot"
+                            />
+                            <span class="featured-tag">Available on Google Play</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="featured-body-text">
+                            <strong>Color Stack Master</strong> is a satisfying stack-and-match
+                            puzzle game. Collect and stack colored blocks, avoid obstacles, and
+                            reach the finish line with the biggest stack you can.
+                        </p>
+                        <p class="featured-meta">
+                            Built with Unity • Android • Single-player • Casual / Hyper-casual
+                        </p>
+                        <ul class="featured-list">
+                            <li>Easy one-touch controls with smooth stacking feel.</li>
+                            <li>Colorful levels with obstacles and pickups.</li>
+                            <li>Quick levels perfect for short play sessions.</li>
+                        </ul>
+
+                        <div class="featured-actions">
+                            <a
+                                class="btn-featured primary"
+                                href="https://play.google.com/store/apps/details?id=com.color.stack.master&hl=en"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                View on Google Play
+                            </a>
+                            <a class="btn-featured outline" href="#games">
+                                See All My Games
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Games grid ===== -->
+        <section id="games">
+            <h2 class="section-title">My Games</h2>
+            <p class="section-subtitle">
+                Games I’ve built and published. Click to view them on the store.
+            </p>
+
+            <div class="games-grid">
+                <!-- Block Moves -->
+                <article class="game-card">
+                    <div class="game-thumb">
+                        <img
+                            src="images/block-moves-color-jam.png"
+                            alt="Block Moves Color Jam Thumbnail"
+                        />
+                        <span class="game-tag">Mobile • Puzzle</span>
+                    </div>
+                    <div class="game-body">
+                        <h3 class="game-title">Block Moves Color Jam</h3>
+                        <p class="game-desc">
+                            A colorful block-moving puzzle where you slide and arrange pieces
+                            to solve each level. Easy to learn, but levels become more
+                            challenging as you progress.
+                        </p>
+                        <p class="game-meta">
+                            Unity • Android • Single-player • Casual
+                        </p>
+                        <div class="game-actions">
+                            <a
+                                class="btn-game primary"
+                                href="https://play.google.com/store/apps/details?id=com.block.moves.color.jam&hl=en"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                View on Google Play
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Color Stack Master -->
+                <article class="game-card">
+                    <div class="game-thumb">
+                        <img
+                            src="images/color-stack-master.png"
+                            alt="Color Stack Master Thumbnail"
+                        />
+                        <span class="game-tag">Mobile • Stack / Puzzle</span>
+                    </div>
+                    <div class="game-body">
+                        <h3 class="game-title">Color Stack Master</h3>
+                        <p class="game-desc">
+                            A relaxing stack-and-match puzzle game. Stack colored blocks,
+                            dodge obstacles, and reach the finish line with a huge tower.
+                        </p>
+                        <p class="game-meta">
+                            Unity • Android • Single-player • Casual / Hyper-casual
+                        </p>
+                        <div class="game-actions">
+                            <a
+                                class="btn-game primary"
+                                href="https://play.google.com/store/apps/details?id=com.color.stack.master&hl=en"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                View on Google Play
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-title">Contact</h2>
+            <p class="section-subtitle">
+                Want to talk about games, work together, or check my projects? Reach out:
+            </p>
+            <div class="section-card contact-grid">
+                <div class="contact-item">
+                    <div class="contact-label">Email & Phone</div>
+                    <p><strong>Email:</strong> <a href="mailto:bondasohan@gmail.com">bondasohan@gmail.com</a></p>
+                    <p><strong>Phone:</strong> +91 8074440483</p>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-label">Links</div>
+                    <div class="contact-links">
+                        <a
+                            class="contact-pill"
+                            href="https://play.google.com/store/apps/details?id=com.block.moves.color.jam&hl=en"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >Block Moves Color Jam</a>
+                        <a
+                            class="contact-pill"
+                            href="https://play.google.com/store/apps/details?id=com.color.stack.master&hl=en"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >Color Stack Master</a>
+                        <a
+                            class="contact-pill"
+                            href="https://www.linkedin.com/in/sohan-bonda-507034251/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © <span id="year"></span> Sohan B • Game Developer. All rights reserved.
+    </footer>
+</div>
+
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
