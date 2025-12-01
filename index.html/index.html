@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>B sohan | Game Developer Portfolio</title>
+    <title> Sohan B | Game Developer Portfolio</title>
 
     <style>
         :root {
@@ -19,7 +19,15 @@
             --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -27,18 +35,55 @@
             background: radial-gradient(circle at top, #111827 0, #020617 55%);
             color: var(--text);
             line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        a { color: inherit; text-decoration: none; }
-        img { max-width: 100%; display: block; }
+        /* soft animated background glow */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -200px;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.25), transparent 55%),
+                radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.22), transparent 55%);
+            opacity: 0.6;
+            z-index: -1;
+            animation: floatGlow 26s ease-in-out infinite alternate;
+        }
 
-        .page { min-height: 100vh; display: flex; flex-direction: column; }
+        @keyframes floatGlow {
+            from {
+                transform: translate3d(-30px, -10px, 0) scale(1);
+            }
+            to {
+                transform: translate3d(40px, 25px, 0) scale(1.08);
+            }
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
         .container {
             width: min(1080px, 100%);
             margin: 0 auto;
             padding: 0 16px;
         }
 
+        /* ===== Navbar ===== */
         .nav {
             position: sticky;
             top: 0;
@@ -46,18 +91,20 @@
             backdrop-filter: blur(20px);
             background: linear-gradient(
                 to bottom,
-                rgba(15, 23, 42, 0.9),
-                rgba(15, 23, 42, 0.75),
+                rgba(15, 23, 42, 0.96),
+                rgba(15, 23, 42, 0.85),
                 transparent
             );
             border-bottom: 1px solid rgba(148, 163, 184, 0.15);
         }
+
         .nav-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 14px 0;
+            padding: 12px 0;
         }
+
         .nav-logo {
             font-weight: 700;
             font-size: 1.1rem;
@@ -65,29 +112,49 @@
             text-transform: uppercase;
             color: var(--text-soft);
         }
-        .nav-logo span { color: var(--accent); }
-        .nav-links { display: flex; gap: 18px; font-size: 0.95rem; }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 18px;
+            font-size: 0.95rem;
+        }
+
         .nav-links a {
             padding: 6px 10px;
             border-radius: 999px;
-            transition: background 0.18s ease, color 0.18s ease;
+            transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
             color: var(--text-soft);
         }
+
         .nav-links a:hover {
             background: rgba(37, 99, 235, 0.16);
             color: var(--text);
+            transform: translateY(-1px);
         }
 
-        .hero { padding: 60px 0 40px; }
+        /* ===== Hero ===== */
+        .hero {
+            padding: 60px 0 40px;
+        }
+
         .hero-inner {
             display: grid;
             grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
             gap: 32px;
             align-items: center;
         }
+
         @media (max-width: 800px) {
-            .hero-inner { grid-template-columns: 1fr; padding-top: 24px; }
+            .hero-inner {
+                grid-template-columns: 1fr;
+                padding-top: 24px;
+            }
         }
+
         .badge {
             display: inline-flex;
             align-items: center;
@@ -100,6 +167,7 @@
             color: var(--text-soft);
             margin-bottom: 16px;
         }
+
         .badge-dot {
             width: 8px;
             height: 8px;
@@ -107,29 +175,34 @@
             background: #22c55e;
             box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
         }
+
         .hero-title {
             font-size: clamp(2.2rem, 4vw, 3rem);
             font-weight: 800;
             letter-spacing: 0.03em;
             margin-bottom: 10px;
         }
+
         .hero-title span {
             background: linear-gradient(to right, #3b82f6, #22c55e);
             -webkit-background-clip: text;
             color: transparent;
         }
+
         .hero-subtitle {
             font-size: 1rem;
             color: var(--text-soft);
             max-width: 460px;
             margin-bottom: 22px;
         }
+
         .hero-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 20px;
         }
+
         .btn-primary,
         .btn-ghost {
             border-radius: 999px;
@@ -141,29 +214,39 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: transform 0.14s ease, box-shadow 0.14s ease,
-            background 0.14s ease, border-color 0.14s ease;
+            transition: transform 0.16s ease, box-shadow 0.16s ease,
+            background 0.16s ease, border-color 0.16s ease, filter 0.16s ease;
         }
+
         .btn-primary {
             background: linear-gradient(135deg, var(--accent), var(--accent-soft));
             color: #f9fafb;
-            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.45);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.5);
         }
+
         .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 14px 40px rgba(37, 99, 235, 0.6);
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.7);
+            filter: brightness(1.05);
         }
+
         .btn-ghost {
             background: rgba(15, 23, 42, 0.85);
             border-color: rgba(148, 163, 184, 0.4);
             color: var(--text-soft);
         }
+
         .btn-ghost:hover {
             background: rgba(15, 23, 42, 1);
             border-color: rgba(148, 163, 184, 0.9);
             color: var(--text);
+            transform: translateY(-1px);
         }
-        .hero-mini { font-size: 0.8rem; color: var(--text-soft); }
+
+        .hero-mini {
+            font-size: 0.8rem;
+            color: var(--text-soft);
+        }
 
         .hero-highlight {
             border-radius: var(--radius-xl);
@@ -172,6 +255,7 @@
             padding: 18px 18px 16px;
             box-shadow: var(--shadow-soft);
         }
+
         .hero-highlight h3 {
             font-size: 0.9rem;
             text-transform: uppercase;
@@ -179,6 +263,7 @@
             color: var(--text-soft);
             margin-bottom: 12px;
         }
+
         .hero-highlight-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -186,35 +271,62 @@
             font-size: 0.8rem;
             color: var(--text-soft);
         }
+
         .hero-highlight-item strong {
             display: block;
             font-size: 0.82rem;
             color: var(--text);
         }
 
-        section { padding: 30px 0; }
-        .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+        /* ===== Sections ===== */
+        section {
+            padding: 30px 0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
         .section-subtitle {
             font-size: 0.9rem;
             color: var(--text-soft);
             margin-bottom: 18px;
         }
+
         .section-card {
             border-radius: var(--radius-xl);
             background: rgba(15, 23, 42, 0.95);
             border: 1px solid var(--border-soft);
             padding: 18px;
             box-shadow: var(--shadow-soft);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
         }
 
-        .about-text { font-size: 0.95rem; color: var(--text-soft); }
-        .about-text p + p { margin-top: 10px; }
+        .section-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+            border-color: rgba(148, 163, 184, 0.6);
+        }
 
+        /* ===== About ===== */
+        .about-text {
+            font-size: 0.95rem;
+            color: var(--text-soft);
+        }
+
+        .about-text p + p {
+            margin-top: 10px;
+        }
+
+        /* ===== Skills ===== */
         .skills-list {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
         }
+
         .skill-pill {
             padding: 6px 12px;
             border-radius: 999px;
@@ -224,6 +336,7 @@
             background: rgba(15, 23, 42, 0.95);
         }
 
+        /* ===== Featured Game ===== */
         .featured-card {
             border-radius: 20px;
             border: 1px solid rgba(148, 163, 184, 0.35);
@@ -231,7 +344,15 @@
             padding: 18px;
             box-shadow: var(--shadow-soft);
             margin-bottom: 18px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
+
+        .featured-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 55px rgba(15, 23, 42, 0.9);
+            border-color: rgba(96, 165, 250, 0.8);
+        }
+
         .featured-label {
             font-size: 0.75rem;
             text-transform: uppercase;
@@ -239,20 +360,26 @@
             color: #93c5fd;
             margin-bottom: 6px;
         }
+
         .featured-title {
             font-size: 1.1rem;
             font-weight: 700;
             margin-bottom: 8px;
         }
+
         .featured-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.4fr);
             gap: 16px;
             align-items: center;
         }
+
         @media (max-width: 768px) {
-            .featured-grid { grid-template-columns: 1fr; }
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
         }
+
         .featured-media {
             border-radius: 16px;
             overflow: hidden;
@@ -260,19 +387,27 @@
             background: radial-gradient(circle at top, #1d283a, #020617);
             padding: 10px;
         }
+
         .featured-media-inner {
             position: relative;
             padding-top: 56.25%;
             overflow: hidden;
             border-radius: 12px;
         }
+
         .featured-media-inner img {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.4s ease;
         }
+
+        .featured-media-inner:hover img {
+            transform: scale(1.04);
+        }
+
         .featured-tag {
             position: absolute;
             left: 10px;
@@ -283,28 +418,36 @@
             font-size: 0.7rem;
             color: var(--text-soft);
         }
+
         .featured-body-text {
             font-size: 0.92rem;
             color: var(--text-soft);
             margin-bottom: 10px;
         }
+
         .featured-meta {
             font-size: 0.8rem;
             color: #93c5fd;
             margin-bottom: 12px;
         }
+
         .featured-list {
             font-size: 0.85rem;
             color: var(--text-soft);
             margin-bottom: 12px;
             padding-left: 18px;
         }
-        .featured-list li + li { margin-top: 4px; }
+
+        .featured-list li + li {
+            margin-top: 4px;
+        }
+
         .featured-actions {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
+
         .btn-featured {
             border-radius: 999px;
             padding: 9px 16px;
@@ -315,29 +458,40 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            transition: transform 0.14s ease, box-shadow 0.14s ease,
-            background 0.14s ease, border-color 0.14s ease;
+            transition: transform 0.16s ease, box-shadow 0.16s ease,
+            background 0.16s ease, border-color 0.16s ease;
         }
+
         .btn-featured.primary {
             background: linear-gradient(135deg, var(--accent), var(--accent-soft));
             color: #f9fafb;
-            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.45);
+            box-shadow: 0 12px 30px rgba(37, 99, 235, 0.5);
         }
+
+        .btn-featured.primary:hover {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 16px 42px rgba(37, 99, 235, 0.8);
+        }
+
         .btn-featured.outline {
             background: rgba(15, 23, 42, 0.9);
             color: var(--text-soft);
             border-color: rgba(148, 163, 184, 0.6);
         }
-        .btn-featured:hover {
+
+        .btn-featured.outline:hover {
+            border-color: rgba(148, 163, 184, 0.9);
+            color: var(--text);
             transform: translateY(-1px);
-            box-shadow: 0 12px 35px rgba(37, 99, 235, 0.65);
         }
 
+        /* ===== Games ===== */
         .games-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
             gap: 16px;
         }
+
         .game-card {
             border-radius: var(--radius-xl);
             overflow: hidden;
@@ -346,19 +500,34 @@
             display: flex;
             flex-direction: column;
             box-shadow: var(--shadow-soft);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
         }
+
+        .game-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+            border-color: rgba(148, 163, 184, 0.7);
+        }
+
         .game-thumb {
             position: relative;
             padding-top: 56.5%;
             overflow: hidden;
         }
+
         .game-thumb img {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.4s ease;
         }
+
+        .game-thumb:hover img {
+            transform: scale(1.05);
+        }
+
         .game-tag {
             position: absolute;
             left: 10px;
@@ -369,6 +538,7 @@
             font-size: 0.7rem;
             color: var(--text-soft);
         }
+
         .game-body {
             padding: 12px 14px 14px;
             display: flex;
@@ -376,15 +546,31 @@
             flex-direction: column;
             gap: 8px;
         }
-        .game-title { font-size: 0.98rem; font-weight: 600; }
-        .game-desc { font-size: 0.85rem; color: var(--text-soft); flex: 1; }
-        .game-meta { font-size: 0.78rem; color: var(--text-soft); opacity: 0.9; }
+
+        .game-title {
+            font-size: 0.98rem;
+            font-weight: 600;
+        }
+
+        .game-desc {
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            flex: 1;
+        }
+
+        .game-meta {
+            font-size: 0.78rem;
+            color: var(--text-soft);
+            opacity: 0.9;
+        }
+
         .game-actions {
             margin-top: 8px;
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
+
         .btn-game {
             flex: 1;
             text-align: center;
@@ -394,27 +580,39 @@
             border: 1px solid rgba(148, 163, 184, 0.4);
             background: rgba(15, 23, 42, 0.95);
             cursor: pointer;
-            transition: background 0.14s ease, transform 0.14s ease,
-            border-color 0.14s ease;
+            transition: background 0.16s ease, transform 0.16s ease,
+            border-color 0.16s ease, box-shadow 0.16s ease;
         }
+
         .btn-game.primary {
             border-color: transparent;
             background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-        }
-        .btn-game:hover {
-            transform: translateY(-1px);
-            border-color: rgba(148, 163, 184, 0.9);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
         }
 
+        .btn-game.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 14px 32px rgba(37, 99, 235, 0.7);
+        }
+
+        /* ===== Contact ===== */
         .contact-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
             gap: 18px;
         }
+
         @media (max-width: 768px) {
-            .contact-grid { grid-template-columns: 1fr; }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
         }
-        .contact-item { font-size: 0.9rem; color: var(--text-soft); }
+
+        .contact-item {
+            font-size: 0.9rem;
+            color: var(--text-soft);
+        }
+
         .contact-label {
             font-size: 0.78rem;
             text-transform: uppercase;
@@ -422,12 +620,14 @@
             color: #6b7280;
             margin-bottom: 4px;
         }
+
         .contact-links {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 4px;
         }
+
         .contact-pill {
             font-size: 0.82rem;
             padding: 6px 12px;
@@ -435,13 +635,34 @@
             border: 1px solid rgba(148, 163, 184, 0.4);
             background: rgba(15, 23, 42, 0.95);
             color: var(--text-soft);
+            transition: background 0.16s ease, transform 0.16s ease,
+            border-color 0.16s ease;
         }
 
+        .contact-pill:hover {
+            border-color: rgba(148, 163, 184, 0.9);
+            transform: translateY(-1px);
+            background: rgba(15, 23, 42, 1);
+        }
+
+        /* ===== Footer ===== */
         footer {
             padding: 16px 0 24px;
             font-size: 0.78rem;
             color: #6b7280;
             text-align: center;
+        }
+
+        /* ===== Fade-in animation ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(28px);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
         }
     </style>
 </head>
@@ -463,7 +684,8 @@
     </header>
 
     <main class="container">
-        <section class="hero" id="top">
+        <!-- Hero -->
+        <section class="hero fade-in" id="top">
             <div class="hero-inner">
                 <div>
                     <div class="badge">
@@ -517,7 +739,8 @@
             </div>
         </section>
 
-        <section id="about">
+        <!-- About -->
+        <section id="about" class="fade-in">
             <h2 class="section-title">About Me</h2>
             <p class="section-subtitle">
                 A quick introduction about who I am and what I build.
@@ -525,8 +748,10 @@
             <div class="section-card">
                 <div class="about-text">
                     <p>
-                        I'm <strong>Sohan B</strong>, a Game Developer who enjoys
+                        I'm <strong>Sohan B </strong>, a Game Developer who enjoys
                         creating fun, simple and satisfying mobile games.
+                        I like taking small ideas and turning them into polished,
+                        playable experiences.
                     </p>
                     <p>
                         I work mainly with <strong>Unity and C#</strong>, focusing
@@ -542,7 +767,8 @@
             </div>
         </section>
 
-        <section id="skills">
+        <!-- Skills -->
+        <section id="skills" class="fade-in">
             <h2 class="section-title">Skills</h2>
             <p class="section-subtitle">
                 Technologies and tools I use regularly.
@@ -562,8 +788,8 @@
             </div>
         </section>
 
-        <!-- ===== Featured Games ===== -->
-        <section id="featured">
+        <!-- Featured -->
+        <section id="featured" class="fade-in">
             <h2 class="section-title">Featured Games</h2>
             <p class="section-subtitle">
                 Highlighted projects that show the kind of mobile games I like to build.
@@ -626,7 +852,6 @@
                 <div class="featured-grid">
                     <div class="featured-media">
                         <div class="featured-media-inner">
-                            <!-- IMPORTANT: this expects images/color-stack-master.png -->
                             <img
                                 src="images/color-stack-master.png"
                                 alt="Color Stack Master Screenshot"
@@ -668,8 +893,8 @@
             </div>
         </section>
 
-        <!-- ===== Games grid ===== -->
-        <section id="games">
+        <!-- Games -->
+        <section id="games" class="fade-in">
             <h2 class="section-title">My Games</h2>
             <p class="section-subtitle">
                 Games I’ve built and published. Click to view them on the store.
@@ -741,7 +966,8 @@
             </div>
         </section>
 
-        <section id="contact">
+        <!-- Contact -->
+        <section id="contact" class="fade-in">
             <h2 class="section-title">Contact</h2>
             <p class="section-subtitle">
                 Want to talk about games, work together, or check my projects? Reach out:
@@ -786,7 +1012,22 @@
 </div>
 
 <script>
+    // current year
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // fade-in on scroll using IntersectionObserver
+    const fadeEls = document.querySelectorAll('.fade-in');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    fadeEls.forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
